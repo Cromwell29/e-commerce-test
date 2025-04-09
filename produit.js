@@ -1,5 +1,3 @@
-let currentProduct; // ← Déclaration en dehors
-
 document.addEventListener("DOMContentLoaded", () => {
   const productId = new URLSearchParams(window.location.search).get("id");
 
@@ -33,31 +31,33 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  currentProduct = fakeProducts.find(p => p.id == productId);
+  const product = fakeProducts.find(p => p.id == productId);
 
-  if (!currentProduct) {
+  if (!product) {
     document.querySelector(".product-detail").innerHTML = "<p>Produit introuvable.</p>";
     return;
   }
 
-  document.getElementById("product-image").src = currentProduct.image;
-  document.getElementById("product-image").alt = currentProduct.name;
-  document.getElementById("product-name").textContent = currentProduct.name;
-  document.getElementById("product-description").textContent = currentProduct.longDescription;
-  document.getElementById("product-price").textContent = currentProduct.price;
+  // Insertion des données dans les bons éléments
+  document.getElementById("product-image").src = product.image;
+  document.getElementById("product-image").alt = product.name;
+  document.getElementById("product-name").textContent = product.name;
+  document.getElementById("product-description").textContent = product.longDescription;
+  document.getElementById("product-price").textContent = product.price;
 
-  if (currentProduct.approved) {
+  // Badge
+  if (product.approved) {
     document.getElementById("seal-badge").style.display = "block";
   }
 
-  // ✅ Gestion du panier (corrigé)
+  // ✅ Gestion du panier dans le même bloc
   const btn = document.querySelector(".btn");
   btn.addEventListener("click", () => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const existing = cart.find(p => p.id == currentProduct.id);
+    const existing = cart.find(p => p.id == product.id);
     if (!existing) {
-      cart.push(currentProduct);
+      cart.push(product);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
