@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Insertion des données dans les bons éléments
+  // Injection des infos
   document.getElementById("product-image").src = product.image;
   document.getElementById("product-image").alt = product.name;
   document.getElementById("product-name").textContent = product.name;
@@ -50,17 +50,26 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("seal-badge").style.display = "block";
   }
 
-  // ✅ Gestion du panier dans le même bloc
-  const btn = document.querySelector(".btn");
-  btn.addEventListener("click", () => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  // Création du bouton Ajouter au panier
+  const btn = document.createElement("a");
+  btn.href = "#";
+  btn.className = "btn";
+  btn.textContent = "Ajouter au panier";
 
+  document.querySelector(".product-info").appendChild(btn);
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existing = cart.find(p => p.id == product.id);
+
     if (!existing) {
       cart.push(product);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+
     btn.textContent = "Ajouté ! 🛒";
     btn.disabled = true;
   });
