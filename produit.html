@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Détail du produit</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="icons/site.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/android-chrome-512x512.png">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1 class="logo">SakuraShop</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#">Produits</a></li>
+          <li><a href="#">Panier</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<main>
+  <div class="container product-detail fade-in">
+    <div class="product-image-wrapper">
+      <img id="product-image" src="" alt="Produit" class="product-image" />
+      <img src="img/seal.png" alt="Seal of Approval" class="seal" id="seal-badge" style="display: none;">
+    </div>
+    <div class="product-info">
+      <h2 id="product-name">Nom du produit</h2>
+      <p id="product-description">Description complète...</p>
+      <strong id="product-price">Prix</strong><br>
+      <button id="add-to-cart" class="btn">Ajouter au panier</button>
+    </div>
+  </div>
+</main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 SakuraShop. Tous droits réservés.</p>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+  <script src="produit.js"></script>
+</body>
+</html>
