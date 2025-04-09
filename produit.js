@@ -1,3 +1,5 @@
+let currentProduct; // ← Déclaration en dehors
+
 document.addEventListener("DOMContentLoaded", () => {
   const productId = new URLSearchParams(window.location.search).get("id");
 
@@ -31,38 +33,35 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  const product = fakeProducts.find(p => p.id == productId);
+  currentProduct = fakeProducts.find(p => p.id == productId);
 
-  if (!product) {
+  if (!currentProduct) {
     document.querySelector(".product-detail").innerHTML = "<p>Produit introuvable.</p>";
     return;
   }
 
-  // Insertion des données dans les bons éléments
-  document.getElementById("product-image").src = product.image;
-  document.getElementById("product-image").alt = product.name;
-  document.getElementById("product-name").textContent = product.name;
-  document.getElementById("product-description").textContent = product.longDescription;
-  document.getElementById("product-price").textContent = product.price;
+  document.getElementById("product-image").src = currentProduct.image;
+  document.getElementById("product-image").alt = currentProduct.name;
+  document.getElementById("product-name").textContent = currentProduct.name;
+  document.getElementById("product-description").textContent = currentProduct.longDescription;
+  document.getElementById("product-price").textContent = currentProduct.price;
 
-  // Badge seal of approval ?
-  if (product.approved) {
+  if (currentProduct.approved) {
     document.getElementById("seal-badge").style.display = "block";
   }
-});
 
-  // Gestion du panier via localStorage
-  document.querySelector('.btn').addEventListener('click', () => {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  // ✅ Gestion du panier (corrigé)
+  const btn = document.querySelector(".btn");
+  btn.addEventListener("click", () => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const existing = cart.find(p => p.id == product.id);
+    const existing = cart.find(p => p.id == currentProduct.id);
     if (!existing) {
-      cart.push(product);
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      const btn = document.querySelector('.btn');
-      btn.textContent = "Ajouté ! ✅";
-      btn.disabled = true;
+      cart.push(currentProduct);
     }
-  });
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+    btn.textContent = "Ajouté ! 🛒";
+    btn.disabled = true;
+  });
+});
