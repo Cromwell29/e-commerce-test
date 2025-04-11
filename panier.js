@@ -7,6 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const clearBtn = document.getElementById("clear-cart");
+  const totalDisplay = document.getElementById("cart-total");
+
+  function updateTotal() {
+    const total = cart.reduce((sum, item) => {
+      const price = parseFloat(item.price.replace("€", "").replace(",", "."));
+      return sum + price;
+    }, 0);
+    totalDisplay.innerHTML = `<strong>Total : </strong>${total.toFixed(2)}€`;
+  }
+
+  clearBtn.addEventListener("click", () => {
+    localStorage.removeItem("cart");
+    cartContainer.innerHTML = "<p>Votre panier est vide.</p>";
+    totalDisplay.innerHTML = `<strong>Total : </strong>0€`;
+  });
+
   cart.forEach(product => {
     const item = document.createElement("div");
     item.className = "cart-item";
@@ -20,4 +37,5 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     cartContainer.appendChild(item);
   });
+  updateTotal();
 });
