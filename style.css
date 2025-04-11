@@ -35,10 +35,36 @@ header {
 }
 
 .logo {
-  font-size: 1.8em;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  animation: logoFadeInZoom 0.8s ease-out;
 }
 
+.logo-img {
+  height: 40px;
+  width: auto;
+  border-radius: 8px;
+  animation: logoFadeInZoom 0.8s ease-out;
+}
+
+.logo-text {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: var(--text-light);
+  margin: 0;
+}
+
+@keyframes logoFadeInZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 header .container {
   display: flex;
   justify-content: space-between;
@@ -280,4 +306,33 @@ body.dark-mode footer {
   .contact-form button {
     align-self: center;
   }
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 2em;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  background-color: var(--bg-white);
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.cart-item-img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.cart-item-info h3 {
+  margin: 0;
+  color: var(--color-accent);
 }
