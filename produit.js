@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/tasse-sakura.jpg",
       description: "Une tasse délicate inspirée des fleurs de cerisier.",
       longDescription: "Parfaite pour le thé ou le café, cette tasse en céramique aux motifs sakura apporte une touche zen à votre quotidien. Résistante au micro-ondes et au lave-vaisselle.",
-      approved: true
+      approved: true,
+      quantity: 1
     },
     {
       id: 2,
@@ -18,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/sac-bento.jpg",
       description: "Transportez votre déjeuner avec élégance.",
       longDescription: "Ce sac bento au tissu traditionnel japonais est idéal pour garder votre repas au frais. Compact et stylé, il convient à tous vos déplacements.",
-      approved: true
+      approved: true,
+      quantity: 1
     },
     {
       id: 3,
@@ -27,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "img/chaussettes-chat.jpg",
       description: "Confort et kawaii réunis pour vos pieds.",
       longDescription: "Portez la douceur avec ces chaussettes à motif chat. En coton respirant, elles s’adaptent à toutes les tailles adultes.",
-      approved: false
+      approved: false,
+      quantity: 1
     },
   ];
 
@@ -55,22 +58,43 @@ document.addEventListener("DOMContentLoaded", () => {
   btn.href = "#";
   btn.className = "btn";
   btn.textContent = "Ajouter au panier";
+  // Créer le champ de quantité
+  const quantityWrapper = document.createElement("div");
+  quantityWrapper.className = "product-quantity";
 
-  document.querySelector(".product-info").appendChild(btn);
+  const quantityLabel = document.createElement("label");
+  quantityLabel.textContent = "Quantité : ";
+  quantityLabel.setAttribute("for", "product-qty");
+
+  const quantityInput = document.createElement("input");
+  quantityInput.type = "number";
+  quantityInput.min = 1;
+  quantityInput.value = 1;
+  quantityInput.id = "product-qty";
+
+  quantityWrapper.appendChild(quantityLabel);
+  quantityWrapper.appendChild(quantityInput);
+  const productInfo = document.querySelector(".product-info");
+  productInfo.appendChild(quantityWrapper);  // 👈 champ quantité
+  productInfo.appendChild(btn);              // 👈 bouton panier
 
   btn.addEventListener("click", (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existing = cart.find(p => p.id == product.id);
+  const quantity = parseInt(quantityInput.value) || 1;
 
-    if (!existing) {
-      cart.push(product);
-    }
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existing = cart.find(p => p.id == product.id);
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+  if (!existing) {
+    cart.push({ ...product, quantity });
+  } else {
+    existing.quantity += quantity;
+  }
 
-    btn.textContent = "Ajouté ! 🛒";
-    btn.disabled = true;
-  });
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  btn.textContent = "Ajouté ! 🛒";
+  btn.disabled = true;
+});
 });
